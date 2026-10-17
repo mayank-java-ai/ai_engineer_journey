@@ -2,103 +2,68 @@ import { useState } from "react";
 
 import api from "../services/api";
 
-import UploadForm
-  from "../components/UploadForm";
+import UploadForm from "../components/UploadForm";
 
-import ChatWindow
-  from "../components/ChatWindow";
+import ChatWindow from "../components/ChatWindow";
 
 function ChatPage() {
+  const [question, setQuestion] = useState("");
 
-  const [
-    question,
-    setQuestion
-  ] = useState("");
+  const [messages, setMessages] = useState([]);
 
-  const [
-    messages,
-    setMessages
-  ] = useState([]);
+  const sendMessage = async () => {
+    if (!question.trim()) {
+      return;
+    }
 
-  const sendMessage =
-    async () => {
+    const response = await api.post("/api/chat", {
+      question,
+    });
 
-      if (
-        !question.trim()
-      ) {
-        return;
-      }
+    setMessages([
+      ...messages,
 
-      const response =
-        await api.post(
-          "/api/chat",
-          {
-            question
-          }
-        );
+      {
+        sender: "user",
+        text: question,
+      },
 
-      setMessages(
-        [
-          ...messages,
+      {
+        sender: "ai",
+        text: response.data.answer,
+      },
+    ]);
 
-          {
-            sender: "user",
-            text: question
-          },
-
-          {
-            sender: "ai",
-            text:
-              response.data.answer
-          }
-        ]
-      );
-
-      setQuestion("");
-    };
+    setQuestion("");
+  };
 
   return (
-
     <div
       style={{
         width: "80%",
         margin: "auto",
-        marginTop: "20px"
+        marginTop: "20px",
       }}
     >
-
-      <h1>
-        Enterprise Knowledge Assistant
-      </h1>
+      <h1>Enterprise Knowledge Assistant</h1>
 
       <UploadForm />
 
       <hr />
 
-      <ChatWindow
-        messages={messages}
-      />
+      <ChatWindow messages={messages} />
 
       <input
         value={question}
-        onChange={(e) =>
-          setQuestion(
-            e.target.value
-          )
-        }
+        onChange={(e) => setQuestion(e.target.value)}
         placeholder="Ask something..."
         style={{
           width: "70%",
-          padding: "10px"
+          padding: "10px",
         }}
       />
 
-      <button
-        onClick={sendMessage}
-      >
-        Send
-      </button>
-
+      <button onClick={sendMessage}>Send</button>
     </div>
   );
 }

@@ -2,39 +2,32 @@ package com.mayank.ai.backend.vector;
 
 public class VectorDocument {
 
-    private String id;
+  private String id;
 
-    private String source;
+  private String source;
 
-    private String content;
+  private String content;
 
-    public VectorDocument() {
-    }
+  public VectorDocument() {}
 
-    public VectorDocument(
-            String source,
-            String content
-    ) {
+  public VectorDocument(String source, String content) {
 
-        this.id =
-                java.util.UUID
-                        .randomUUID()
-                        .toString();
+    this.id = java.util.UUID.randomUUID().toString();
 
-        this.source = source;
+    this.source = source;
 
-        this.content = content;
-    }
+    this.content = content;
+  }
 
-    public String getId() {
-        return id;
-    }
+  public String getId() {
+    return id;
+  }
 
-    public String getSource() {
-        return source;
-    }
+  public String getSource() {
+    return source;
+  }
 
-    public String getContent() {
-        return content;
-    }
+  public String getContent() {
+    return content;
+  }
 }

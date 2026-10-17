@@ -1,38 +1,17 @@
 import api from "../services/api";
 
 function UploadForm() {
+  const uploadFile = async (event) => {
+    const formData = new FormData();
 
-  const uploadFile = async (
-    event
-  ) => {
+    for (let file of event.target.files) {
+      formData.append("files", file);
+    }
 
-    const file =
-      event.target.files[0];
-
-    const formData =
-      new FormData();
-
-    formData.append(
-      "file",
-      file
-    );
-
-    await api.post(
-      "/api/document/upload",
-      formData
-    );
-
-    alert(
-      "File Uploaded Successfully"
-    );
+    await api.post("/api/document/upload", formData);
   };
 
-  return (
-    <input
-      type="file"
-      onChange={uploadFile}
-    />
-  );
+  return <input type="file" multiple onChange={uploadFile} />;
 }
 
 export default UploadForm;

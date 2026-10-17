@@ -2,13 +2,13 @@ package com.mayank.ai.backend.dto;
 
 public class ChatResponse {
 
-    private String answer;
+  private String answer;
 
-    public ChatResponse(String answer) {
-        this.answer = answer;
-    }
+  public ChatResponse(String answer) {
+    this.answer = answer;
+  }
 
-    public String getAnswer() {
-        return answer;
-    }
+  public String getAnswer() {
+    return answer;
+  }
 }

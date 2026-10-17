@@ -8,44 +8,35 @@ import org.springframework.stereotype.Component;
 @Component
 public class StartupLoader {
 
-    private final VectorStoreService vectorStoreService;
+  private final VectorStoreService vectorStoreService;
 
-    public StartupLoader(
-            VectorStoreService vectorStoreService
-    ) {
-        this.vectorStoreService =
-                vectorStoreService;
-    }
+  public StartupLoader(VectorStoreService vectorStoreService) {
+    this.vectorStoreService = vectorStoreService;
+  }
 
-    @PostConstruct
-    public void loadData() {
+  @PostConstruct
+  public void loadData() {
 
-        vectorStoreService.addDocument(
+    vectorStoreService.addDocument(
+        new VectorDocument(
+            "leave-policy",
+            """
+            Paternity Leave : 15 Days
 
-                new VectorDocument(
-                        "leave-policy",
-                        """
-                        Paternity Leave : 15 Days
+            Maternity Leave : 26 Weeks
 
-                        Maternity Leave : 26 Weeks
+            Annual Leave : 30 Days
+            """));
 
-                        Annual Leave : 30 Days
-                        """
-                )
-        );
+    vectorStoreService.addDocument(
+        new VectorDocument(
+            "travel-policy",
+            """
+            Travel Allowance : 5000 INR
 
-        vectorStoreService.addDocument(
+            Flight reimbursement allowed
 
-                new VectorDocument(
-                        "travel-policy",
-                        """
-                        Travel Allowance : 5000 INR
-
-                        Flight reimbursement allowed
-
-                        Hotel reimbursement allowed
-                        """
-                )
-        );
-    }
+            Hotel reimbursement allowed
+            """));
+  }
 }

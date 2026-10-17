@@ -1,6 +1,5 @@
 // package com.mayank.ai.backend.service;
 
-
 // import dev.langchain4j.model.ollama.OllamaChatModel;
 // import org.springframework.stereotype.Service;
 
@@ -9,7 +8,6 @@
 
 //     private final OllamaChatModel model;
 //     private final DocumentService documentService;
-    
 
 //     public AiServiceOld(DocumentService documentService) {
 //         this.documentService =

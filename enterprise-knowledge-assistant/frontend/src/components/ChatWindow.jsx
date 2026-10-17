@@ -1,31 +1,15 @@
 import MessageBubble from "./MessageBubble";
 
-function ChatWindow({
-  messages
-}) {
-
+function ChatWindow({ messages }) {
   return (
     <div>
-
-      {
-        messages.map(
-          (
-            message,
-            index
-          ) => (
-
-            <MessageBubble
-              key={index}
-              text={message.text}
-              sender={
-                message.sender
-              }
-            />
-
-          )
-        )
-      }
-
+      {messages.map((message, index) => (
+        <MessageBubble
+          key={index}
+          text={message.text}
+          sender={message.sender}
+        />
+      ))}
     </div>
   );
 }

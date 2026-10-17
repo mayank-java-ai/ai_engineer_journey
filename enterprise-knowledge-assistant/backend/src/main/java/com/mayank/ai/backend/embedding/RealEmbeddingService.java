@@ -5,16 +5,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class RealEmbeddingService {
 
-    public float[] embed(
-            String content
-    ) {
+  public float[] embed(String content) {
 
-        // Temporary placeholder
+    // Temporary placeholder
 
-        System.out.println(
-                "Generating Embedding..."
-        );
+    System.out.println("Generating Embedding...");
 
-        return new float[384];
-    }
+    return new float[384];
+  }
 }

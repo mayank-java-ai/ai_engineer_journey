@@ -1,46 +1,61 @@
 package com.mayank.ai.backend.agents;
 
+import com.mayank.ai.backend.retriever.RetrievalResult;
 import com.mayank.ai.backend.retriever.VectorRetriever;
 import com.mayank.ai.backend.service.AiService;
-//import com.mayank.ai.backend.service.AiService;
-//import com.mayank.ai.backend.service.DocumentService;
+// import com.mayank.ai.backend.service.AiService;
+// import com.mayank.ai.backend.service.DocumentService;
 import org.springframework.stereotype.Component;
 
 @Component
 public class RagAgent {
 
-    private final AiService aiService;
-    private final VectorRetriever retriever;
-    // private final DocumentService documentService;
+  private final AiService aiService;
+  private final VectorRetriever retriever;
 
-    public RagAgent(AiService aiService, VectorRetriever retriever) {
-        this.aiService = aiService;
-        this.retriever = retriever;
+  // private final DocumentService documentService;
+
+  public RagAgent(AiService aiService, VectorRetriever retriever) {
+    this.aiService = aiService;
+    this.retriever = retriever;
+  }
+
+  public String answer(String question) {
+
+    RetrievalResult retrieval = retriever.retrieve(question);
+
+    String context = retrieval.context();
+
+    if (context == null || context.isBlank()) {
+
+      return """
+      Information not found
+      in uploaded documents.
+      """;
     }
 
-    public String answer(String question) {
-        String context = retriever.retrieve(question);
-        if (
-            context.isBlank()
-    ) {
+    String prompt =
+        """
+        You are an enterprise policy assistant.
 
-        return """
-                No matching context found
-                in uploaded documents.
-                """;
-    }
-        String prompt =
-                """
-                Answer only using context.
+        Use conversation history
+        and retrieved context.
 
-                Context:
-                %s
+        If a follow-up question is asked,
+        use previous conversation.
 
-                Question:
-                %s
-                """
-                .formatted(context, question);
+        Answer ONLY from context.
 
-        return aiService.ask(prompt);
-    }
+        Context:
+        %s
+
+        Question:
+        %s
+        """
+            .formatted(context, question);
+
+    String answer = aiService.askWithoutMemory(prompt);
+
+    return answer + "\n\nSources:\n" + String.join("\n", retrieval.sources());
+  }
 }

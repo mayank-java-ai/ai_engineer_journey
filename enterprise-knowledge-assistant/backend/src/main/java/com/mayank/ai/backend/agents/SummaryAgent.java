@@ -6,22 +6,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class SummaryAgent {
 
-    private final AiService aiService;
+  private final AiService aiService;
 
-    public SummaryAgent(
-            AiService aiService
-    ) {
-        this.aiService =
-                aiService;
-    }
+  public SummaryAgent(AiService aiService) {
+    this.aiService = aiService;
+  }
 
-    public String summarize(
-            String content
-    ) {
+  public String summarize(String content) {
 
-        return aiService.ask(
-                "Summarize:\n" +
-                        content
-        );
-    }
+    return aiService.ask("Summarize:\n" + content);
+  }
 }

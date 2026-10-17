@@ -10,25 +10,17 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("*")
 public class ChatController {
 
-    private final OrchestratorAgent orchestratorAgent;
+  private final OrchestratorAgent orchestratorAgent;
 
-    public ChatController(
-            OrchestratorAgent orchestratorAgent
-    ) {
-        this.orchestratorAgent =
-                orchestratorAgent;
-    }
+  public ChatController(OrchestratorAgent orchestratorAgent) {
+    this.orchestratorAgent = orchestratorAgent;
+  }
 
-    @PostMapping
-    public ChatResponse chat(
-            @RequestBody ChatRequest request
-    ) {
+  @PostMapping
+  public ChatResponse chat(@RequestBody ChatRequest request) {
 
-        String answer =
-                orchestratorAgent.process(
-                        request.getQuestion()
-                );
+    String answer = orchestratorAgent.process(request.getQuestion());
 
-        return new ChatResponse(answer);
-    }
+    return new ChatResponse(answer);
+  }
 }

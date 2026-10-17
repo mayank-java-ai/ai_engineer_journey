@@ -7,13 +7,9 @@ import org.springframework.web.client.RestClient;
 @Configuration
 public class QdrantConfig {
 
-    @Bean
-    public RestClient qdrantClient() {
+  @Bean
+  public RestClient qdrantClient() {
 
-        return RestClient.builder()
-                .baseUrl(
-                        "http://localhost:6333"
-                )
-                .build();
-    }
+    return RestClient.builder().baseUrl("http://localhost:6333").build();
+  }
 }

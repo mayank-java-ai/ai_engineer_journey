@@ -6,23 +6,35 @@ import org.springframework.stereotype.Component;
 @Component
 public class EmailAgent {
 
-    private final AiService aiService;
+  private final AiService aiService;
 
-    public EmailAgent(
-            AiService aiService
-    ) {
+  public EmailAgent(AiService aiService) {
 
-        this.aiService =
-                aiService;
-    }
+    this.aiService = aiService;
+  }
 
-    public String draftEmail(
-            String prompt
-    ) {
+  public String draftEmail(
+        String userPrompt
+) {
 
-        return aiService.ask(
-                "Draft professional email:\n"
-                        + prompt
-        );
-    }
+    String prompt =
+            """
+            You are a professional email assistant.
+
+            Generate:
+
+            1. Subject
+            2. Email body
+
+            Keep language professional.
+
+            User Request:
+            %s
+            """
+            .formatted(userPrompt);
+
+    return aiService.askWithoutMemory(
+            prompt
+    );
+}
 }
